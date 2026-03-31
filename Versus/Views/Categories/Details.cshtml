@@ -1,0 +1,60 @@
+@model Versus.ViewModels.CategoryViewModel
+
+@{
+    ViewData["Title"] = "Category Details";
+    var competitors = ViewBag.Competitors as IEnumerable<Versus.ViewModels.CompetitorViewModel> ?? Enumerable.Empty<Versus.ViewModels.CompetitorViewModel>();
+}
+
+<div class="row">
+    <div class="col-md-5">
+        <div class="card shadow-sm mb-3">
+            <div class="card-header bg-info text-white">
+                <h4 class="mb-0">@Model.Name</h4>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-5">Description</dt>
+                    <dd class="col-sm-7">@(Model.Description ?? "—")</dd>
+                    <dt class="col-sm-5">Weight Range</dt>
+                    <dd class="col-sm-7">@(Model.MinWeight.HasValue || Model.MaxWeight.HasValue ? $"{Model.MinWeight?.ToString("F1") ?? "—"} - {Model.MaxWeight?.ToString("F1") ?? "—"} kg" : "—")</dd>
+                    <dt class="col-sm-5">Age Range</dt>
+                    <dd class="col-sm-7">@(Model.MinAge.HasValue || Model.MaxAge.HasValue ? $"{Model.MinAge?.ToString() ?? "—"} - {Model.MaxAge?.ToString() ?? "—"}" : "—")</dd>
+                    <dt class="col-sm-5">Competitors</dt>
+                    <dd class="col-sm-7"><span class="badge bg-info text-dark">@Model.CompetitorCount</span></dd>
+                </dl>
+            </div>
+            <div class="card-footer d-flex gap-2">
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+                <a asp-action="Index" class="btn btn-secondary">Back</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h5 class="mb-0">Competitors in this Category</h5>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-sm mb-0">
+                    <thead class="table-light">
+                        <tr><th>Name</th><th>Age</th><th>Weight (kg)</th></tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var c in competitors)
+                        {
+                            <tr>
+                                <td>@c.Name</td>
+                                <td>@c.Age</td>
+                                <td>@c.Weight.ToString("F1")</td>
+                            </tr>
+                        }
+                        @if (!competitors.Any())
+                        {
+                            <tr><td colspan="3" class="text-center text-muted py-3">No competitors in this category.</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
