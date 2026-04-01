@@ -7,10 +7,10 @@ public static class DbSeeder
 {
     public static async Task SeedAsync(IServiceProvider serviceProvider)
     {
-        var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
+        var contexto = serviceProvider.GetRequiredService<ApplicationDbContext>();
         var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
-        context.Database.EnsureCreated();
+        contexto.Database.EnsureCreated();
 
         if (!userManager.Users.Any())
         {
@@ -23,55 +23,55 @@ public static class DbSeeder
             await userManager.CreateAsync(admin, "Admin@123");
         }
 
-        if (!context.Categories.Any())
+        if (!contexto.Categorias.Any())
         {
-            var categories = new List<Category>
+            var categorias = new List<Categoria>
             {
-                new() { Name = "Lightweight", Description = "Up to 60 kg", MaxWeight = 60 },
-                new() { Name = "Welterweight", Description = "61-70 kg", MinWeight = 61, MaxWeight = 70 },
-                new() { Name = "Middleweight", Description = "71-80 kg", MinWeight = 71, MaxWeight = 80 },
-                new() { Name = "Heavyweight", Description = "Over 80 kg", MinWeight = 81 },
-                new() { Name = "Junior", Description = "Under 18 years", MaxAge = 17 },
+                new() { Nombre = "Peso Ligero", Descripcion = "Hasta 60 kg", PesoMaximo = 60 },
+                new() { Nombre = "Peso Wélter", Descripcion = "61-70 kg", PesoMinimo = 61, PesoMaximo = 70 },
+                new() { Nombre = "Peso Medio", Descripcion = "71-80 kg", PesoMinimo = 71, PesoMaximo = 80 },
+                new() { Nombre = "Peso Pesado", Descripcion = "Más de 80 kg", PesoMinimo = 81 },
+                new() { Nombre = "Junior", Descripcion = "Menores de 18 años", EdadMaxima = 17 },
             };
-            context.Categories.AddRange(categories);
-            await context.SaveChangesAsync();
+            contexto.Categorias.AddRange(categorias);
+            await contexto.SaveChangesAsync();
         }
 
-        if (!context.Competitors.Any())
+        if (!contexto.Competidores.Any())
         {
-            var lightweightId = context.Categories.First(c => c.Name == "Lightweight").Id;
-            var welterweightId = context.Categories.First(c => c.Name == "Welterweight").Id;
-            var middleweightId = context.Categories.First(c => c.Name == "Middleweight").Id;
-            var heavyweightId = context.Categories.First(c => c.Name == "Heavyweight").Id;
+            var ligeroId = contexto.Categorias.First(c => c.Nombre == "Peso Ligero").Id;
+            var welterId = contexto.Categorias.First(c => c.Nombre == "Peso Wélter").Id;
+            var medioId = contexto.Categorias.First(c => c.Nombre == "Peso Medio").Id;
+            var pesadoId = contexto.Categorias.First(c => c.Nombre == "Peso Pesado").Id;
 
-            var competitors = new List<Competitor>
+            var competidores = new List<Competidor>
             {
-                new() { Name = "Carlos Mendoza", Age = 25, Weight = 58.5, CategoryId = lightweightId },
-                new() { Name = "Juan García", Age = 22, Weight = 59.0, CategoryId = lightweightId },
-                new() { Name = "Pedro López", Age = 28, Weight = 57.5, CategoryId = lightweightId },
-                new() { Name = "Miguel Torres", Age = 24, Weight = 60.0, CategoryId = lightweightId },
-                new() { Name = "Andrés Ríos", Age = 26, Weight = 65.0, CategoryId = welterweightId },
-                new() { Name = "Luis Herrera", Age = 23, Weight = 68.5, CategoryId = welterweightId },
-                new() { Name = "Diego Castro", Age = 27, Weight = 70.0, CategoryId = welterweightId },
-                new() { Name = "Roberto Vargas", Age = 29, Weight = 75.0, CategoryId = middleweightId },
-                new() { Name = "Felipe Morales", Age = 25, Weight = 78.0, CategoryId = middleweightId },
-                new() { Name = "Sebastián Jiménez", Age = 30, Weight = 85.0, CategoryId = heavyweightId },
-                new() { Name = "Nicolás Romero", Age = 32, Weight = 90.0, CategoryId = heavyweightId },
-                new() { Name = "Mateo Flores", Age = 28, Weight = 88.0, CategoryId = heavyweightId },
+                new() { Nombre = "Carlos Mendoza", Edad = 25, Peso = 58.5, CategoriaId = ligeroId },
+                new() { Nombre = "Juan García", Edad = 22, Peso = 59.0, CategoriaId = ligeroId },
+                new() { Nombre = "Pedro López", Edad = 28, Peso = 57.5, CategoriaId = ligeroId },
+                new() { Nombre = "Miguel Torres", Edad = 24, Peso = 60.0, CategoriaId = ligeroId },
+                new() { Nombre = "Andrés Ríos", Edad = 26, Peso = 65.0, CategoriaId = welterId },
+                new() { Nombre = "Luis Herrera", Edad = 23, Peso = 68.5, CategoriaId = welterId },
+                new() { Nombre = "Diego Castro", Edad = 27, Peso = 70.0, CategoriaId = welterId },
+                new() { Nombre = "Roberto Vargas", Edad = 29, Peso = 75.0, CategoriaId = medioId },
+                new() { Nombre = "Felipe Morales", Edad = 25, Peso = 78.0, CategoriaId = medioId },
+                new() { Nombre = "Sebastián Jiménez", Edad = 30, Peso = 85.0, CategoriaId = pesadoId },
+                new() { Nombre = "Nicolás Romero", Edad = 32, Peso = 90.0, CategoriaId = pesadoId },
+                new() { Nombre = "Mateo Flores", Edad = 28, Peso = 88.0, CategoriaId = pesadoId },
             };
-            context.Competitors.AddRange(competitors);
-            await context.SaveChangesAsync();
+            contexto.Competidores.AddRange(competidores);
+            await contexto.SaveChangesAsync();
         }
 
-        if (!context.Competitions.Any())
+        if (!contexto.Competencias.Any())
         {
-            var lightweightId = context.Categories.First(c => c.Name == "Lightweight").Id;
-            var competitions = new List<Competition>
+            var ligeroId = contexto.Categorias.First(c => c.Nombre == "Peso Ligero").Id;
+            var competencias = new List<Competencia>
             {
-                new() { Name = "Copa Versus 2024 - Ligero", Date = new DateTime(2024, 6, 15), Location = "Ciudad de México", CategoryId = lightweightId },
+                new() { Nombre = "Copa Versus 2024 - Ligero", Fecha = new DateTime(2024, 6, 15), Lugar = "Ciudad de México", CategoriaId = ligeroId },
             };
-            context.Competitions.AddRange(competitions);
-            await context.SaveChangesAsync();
+            contexto.Competencias.AddRange(competencias);
+            await contexto.SaveChangesAsync();
         }
     }
 }

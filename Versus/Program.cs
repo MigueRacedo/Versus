@@ -8,7 +8,7 @@ using Versus.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+    ?? throw new InvalidOperationException("Cadena de conexión 'DefaultConnection' no encontrada.");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
@@ -27,22 +27,22 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 
 builder.Services.AddControllersWithViews();
 
-// Repositories
-builder.Services.AddScoped<ICompetitorRepository, CompetitorRepository>();
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<ICompetitionRepository, CompetitionRepository>();
-builder.Services.AddScoped<IBracketRepository, BracketRepository>();
-builder.Services.AddScoped<IMatchRepository, MatchRepository>();
+// Repositorios
+builder.Services.AddScoped<IRepositorioCompetidor, RepositorioCompetidor>();
+builder.Services.AddScoped<IRepositorioCategoria, RepositorioCategoria>();
+builder.Services.AddScoped<IRepositorioCompetencia, RepositorioCompetencia>();
+builder.Services.AddScoped<IRepositorioLlave, RepositorioLlave>();
+builder.Services.AddScoped<IRepositorioCombate, RepositorioCombate>();
 
-// Services
-builder.Services.AddScoped<ICompetitorService, CompetitorService>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<ICompetitionService, CompetitionService>();
-builder.Services.AddScoped<IBracketService, BracketService>();
+// Servicios
+builder.Services.AddScoped<IServicioCompetidor, ServicioCompetidor>();
+builder.Services.AddScoped<IServicioCategoria, ServicioCategoria>();
+builder.Services.AddScoped<IServicioCompetencia, ServicioCompetencia>();
+builder.Services.AddScoped<IServicioLlave, ServicioLlave>();
 
 var app = builder.Build();
 
-// Seed the database
+// Sembrar la base de datos
 using (var scope = app.Services.CreateScope())
 {
     await DbSeeder.SeedAsync(scope.ServiceProvider);
@@ -54,7 +54,7 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Inicio/Error");
     app.UseHsts();
 }
 
@@ -65,7 +65,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Inicio}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 app.Run();

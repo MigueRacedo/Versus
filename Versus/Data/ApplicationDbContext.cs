@@ -12,32 +12,32 @@ public class ApplicationDbContext : IdentityDbContext
     {
     }
 
-    public DbSet<Competitor> Competitors { get; set; }
-    public DbSet<Category> Categories { get; set; }
-    public DbSet<Competition> Competitions { get; set; }
-    public DbSet<Bracket> Brackets { get; set; }
-    public DbSet<Match> Matches { get; set; }
+    public DbSet<Competidor> Competidores { get; set; }
+    public DbSet<Categoria> Categorias { get; set; }
+    public DbSet<Competencia> Competencias { get; set; }
+    public DbSet<Llave> Llaves { get; set; }
+    public DbSet<Combate> Combates { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
 
-        builder.Entity<Match>()
-            .HasOne(m => m.Competitor1)
-            .WithMany(c => c.MatchesAsCompetitor1)
-            .HasForeignKey(m => m.Competitor1Id)
+        builder.Entity<Combate>()
+            .HasOne(c => c.Competidor1)
+            .WithMany(cp => cp.CombatesComoCompetidor1)
+            .HasForeignKey(c => c.Competidor1Id)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.Entity<Match>()
-            .HasOne(m => m.Competitor2)
-            .WithMany(c => c.MatchesAsCompetitor2)
-            .HasForeignKey(m => m.Competitor2Id)
+        builder.Entity<Combate>()
+            .HasOne(c => c.Competidor2)
+            .WithMany(cp => cp.CombatesComoCompetidor2)
+            .HasForeignKey(c => c.Competidor2Id)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.Entity<Match>()
-            .HasOne(m => m.Winner)
+        builder.Entity<Combate>()
+            .HasOne(c => c.Ganador)
             .WithMany()
-            .HasForeignKey(m => m.WinnerId)
+            .HasForeignKey(c => c.GanadorId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

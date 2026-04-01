@@ -1,0 +1,32 @@
+@model Versus.ViewModels.CategoriaViewModel
+
+@{
+    ViewData["Title"] = "Eliminar Categoría";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-danger">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">Eliminar Categoría</h4>
+            </div>
+            <div class="card-body">
+                <p class="lead">¿Está seguro de que desea eliminar <strong>@Model.Nombre</strong>?</p>
+                <dl class="row">
+                    <dt class="col-sm-4">Descripción</dt><dd class="col-sm-8">@(Model.Descripcion ?? "—")</dd>
+                    <dt class="col-sm-4">Competidores</dt><dd class="col-sm-8">@Model.CantidadCompetidores</dd>
+                </dl>
+                @if (Model.CantidadCompetidores > 0)
+                {
+                    <div class="alert alert-warning">Esta categoría tiene @Model.CantidadCompetidores competidor(es). Al eliminarla se les quitará la asignación.</div>
+                }
+            </div>
+            <div class="card-footer d-flex gap-2">
+                <form asp-action="Delete" asp-route-id="@Model.Id">
+                    <button type="submit" class="btn btn-danger">Sí, Eliminar</button>
+                </form>
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </div>
+    </div>
+</div>

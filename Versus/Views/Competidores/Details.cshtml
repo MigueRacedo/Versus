@@ -1,0 +1,49 @@
+@model Versus.ViewModels.CompetidorViewModel
+
+@{
+    ViewData["Title"] = "Detalles del Competidor";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-info text-white">
+                <h4 class="mb-0">@Model.Nombre</h4>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Edad</dt>
+                    <dd class="col-sm-8">@Model.Edad años</dd>
+                    <dt class="col-sm-4">Peso</dt>
+                    <dd class="col-sm-8">@Model.Peso.ToString("F1") kg</dd>
+                    <dt class="col-sm-4">Categoría</dt>
+                    <dd class="col-sm-8">
+                        @if (Model.NombreCategoria != null)
+                        {
+                            <span class="badge bg-primary fs-6">@Model.NombreCategoria</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">Sin categoría</span>
+                        }
+                    </dd>
+                </dl>
+                <hr />
+                <h5>Asignar / Cambiar Categoría</h5>
+                <form asp-action="AssignCategory" method="post">
+                    <input type="hidden" name="competidorId" value="@Model.Id" />
+                    <div class="input-group">
+                        <select name="categoriaId" class="form-select" asp-items="ViewBag.Categories">
+                            <option value="">-- Quitar Categoría --</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary">Asignar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer d-flex gap-2">
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar</a>
+                <a asp-action="Index" class="btn btn-secondary">Volver</a>
+            </div>
+        </div>
+    </div>
+</div>

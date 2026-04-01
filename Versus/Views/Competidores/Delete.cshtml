@@ -1,0 +1,29 @@
+@model Versus.ViewModels.CompetidorViewModel
+
+@{
+    ViewData["Title"] = "Eliminar Competidor";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-danger">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">Eliminar Competidor</h4>
+            </div>
+            <div class="card-body">
+                <p class="lead">¿Está seguro de que desea eliminar a <strong>@Model.Nombre</strong>?</p>
+                <dl class="row">
+                    <dt class="col-sm-4">Edad</dt><dd class="col-sm-8">@Model.Edad</dd>
+                    <dt class="col-sm-4">Peso</dt><dd class="col-sm-8">@Model.Peso kg</dd>
+                    <dt class="col-sm-4">Categoría</dt><dd class="col-sm-8">@(Model.NombreCategoria ?? "Ninguna")</dd>
+                </dl>
+            </div>
+            <div class="card-footer d-flex gap-2">
+                <form asp-action="Delete" asp-route-id="@Model.Id">
+                    <button type="submit" class="btn btn-danger">Sí, Eliminar</button>
+                </form>
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </div>
+    </div>
+</div>
