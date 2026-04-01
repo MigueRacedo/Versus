@@ -1,0 +1,41 @@
+@{
+    ViewData["Title"] = "Versus - Gestión de Deportes de Combate";
+}
+
+<div class="text-center mb-5">
+    <h1 class="display-4">Versus</h1>
+    <p class="lead">Sistema de Gestión de Competencias de Deportes de Combate</p>
+</div>
+
+<div class="row text-center g-4 mb-5">
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h2 class="display-5 text-primary">@ViewBag.TotalCompetidores</h2>
+                <h5 class="card-title">Competidores</h5>
+                <p class="text-muted">Atletas registrados en todas las categorías</p>
+                <a asp-controller="Competidores" asp-action="Index" class="btn btn-outline-primary">Gestionar Competidores</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h2 class="display-5 text-success">@ViewBag.TotalCategorias</h2>
+                <h5 class="card-title">Categorías</h5>
+                <p class="text-muted">Divisiones de peso y edad configuradas</p>
+                <a asp-controller="Categorias" asp-action="Index" class="btn btn-outline-success">Gestionar Categorías</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h2 class="display-5 text-warning">@ViewBag.TotalCompetencias</h2>
+                <h5 class="card-title">Competencias</h5>
+                <p class="text-muted">Eventos con llaves y resultados de combates</p>
+                <a asp-controller="Competencias" asp-action="Index" class="btn btn-outline-warning">Gestionar Competencias</a>
+            </div>
+        </div>
+    </div>
+</div>
